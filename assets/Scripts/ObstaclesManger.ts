@@ -20,29 +20,30 @@ export class ObstaclesManger extends Component {
     
     start() {
         let canWidth = this.canvas.getComponent(UITransform).width;
-        
         this.schedule(function() {
+            let ran = randomRangeInt(1,4);
+            
+            if(ran < 3){
+                // Here this refers to component
+                let obs = instantiate(this.block);
+                let obswidth = obs.getComponent(UITransform).width;
+                obs.parent = this.node.parent;
+                obs.getComponent(Block).acceleration = (this.score.score / 10) + 1;
+                let arr = [(canWidth-obswidth)/2,-(canWidth-obswidth)/2];
+                obs.position = new Vec3(arr[Math.floor(Math.random()*arr.length)], this.node.position.y, 0);
+            }else{
             // Here this refers to component
-            let obs = instantiate(this.block);
-            let obswidth = obs.getComponent(UITransform).width;
-            obs.parent = this.node.parent;
-            obs.getComponent(Block).acceleration = (this.score.score / 5) + 1;
-            let arr = [(canWidth-obswidth)/2,-(canWidth-obswidth)/2];
-            obs.position = new Vec3(arr[Math.floor(Math.random()*arr.length)], this.node.position.y, 0);
-        }, randomRangeInt(5,10));
+                let obs = instantiate(this.Square);
+                let obswidth = obs.getComponent(UITransform).width;
+                obs.parent = this.node.parent;
+                obs.getComponent(Block).acceleration = (this.score.score / 5) + 1;
+                obs.position = new Vec3(randomRangeInt((canWidth-obswidth)/2,-(canWidth-obswidth)/2), this.node.position.y, 0);
+            }
 
-        this.schedule(function() {
-            // Here this refers to component
-            let obs = instantiate(this.Square);
-            let obswidth = obs.getComponent(UITransform).width;
-            obs.parent = this.node.parent;
-            obs.getComponent(Block).acceleration = (this.score.score / 5) + 1;
-            obs.position = new Vec3(randomRangeInt((canWidth-obswidth)/2,-(canWidth-obswidth)/2), this.node.position.y, 0);
-        }, randomRangeInt(2,7));
+        }, 1.2);
     }
 
     update(deltaTime: number) {
-        
     }
 }
 

@@ -30,7 +30,7 @@ export class Block extends Component {
             this.acceleration = 5;
         }
         
-        let viTri = new Vec3(this.node.position.x, this.node.position.y - 250 * this.acceleration * deltaTime , 0);
+        let viTri = new Vec3(this.node.position.x, this.node.position.y - 330 * this.acceleration * deltaTime , 0);
         this.node.position = viTri;
         if(this.node.position.y <= -1025){
             this.node.destroy();
