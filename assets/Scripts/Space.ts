@@ -1,17 +1,20 @@
-import { _decorator, Component, Node, Vec3 } from 'cc';
+import { _decorator, Component, Node, Vec3, UITransform } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Space')
 export class Space extends Component {
-    start() {
+    UI: UITransform;
 
+    start() {
+        //
     }
 
     update(deltaTime: number) {
-        let viTri = new Vec3(this.node.position.x, this.node.position.y - (150 * deltaTime), 0);
+        let viTri = new Vec3(this.node.position.x, this.node.position.y - (200 * deltaTime), 0);
         this.node.position = viTri;
-        if(this.node.position.y <= -825){
-            this.node.position = new Vec3(this.node.position.x,1218,0);
+        this.UI = this.getComponent(UITransform);
+        if(this.node.position.y <= - this.UI.height){
+            this.node.position = new Vec3(this.node.position.x,this.UI.height,0);
         }
     }
 }

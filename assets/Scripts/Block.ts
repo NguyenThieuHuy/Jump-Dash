@@ -1,16 +1,17 @@
-import { _decorator, Component, Node, Vec3, Collider2D, Contact2DType, IPhysics2DContact, director, random, randomRangeInt } from 'cc';
+import { _decorator, Component, Vec3, Collider2D, Contact2DType, IPhysics2DContact, director} from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('Square')
-export class Square extends Component {
+@ccclass('Block')
+export class Block extends Component {
+
+    acceleration: number;
+
     onBeginContact (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         // will be called once when two colliders begin to contact
         if(otherCollider.tag == 1){
             console.log('---------Game Over---------');
             director.loadScene("main");
         }
-
-
     }
 
     start() {
@@ -25,12 +26,14 @@ export class Square extends Component {
  
     update(deltaTime: number) {
         // console.log(this.node.position);
-        let viTri = new Vec3(this.node.position.x, this.node.position.y - 200 * deltaTime, 0);
+        if(this.acceleration > 5){
+            this.acceleration = 5;
+        }
+        
+        let viTri = new Vec3(this.node.position.x, this.node.position.y - 250 * this.acceleration * deltaTime , 0);
         this.node.position = viTri;
-
-
-        if(this.node.position.y <= -380){
-            this.node.position = new Vec3(this.node.position.x, randomRangeInt(2000,2500) ,0);
+        if(this.node.position.y <= -1025){
+            this.node.destroy();
         }
     }
 }
